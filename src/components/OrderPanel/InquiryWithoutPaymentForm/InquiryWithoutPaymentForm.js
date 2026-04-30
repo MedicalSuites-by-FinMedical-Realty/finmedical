@@ -17,13 +17,23 @@ const renderForm = formRenderProps => {
     handleSubmit,
     isOwnListing,
     finePrintComponent: FinePrint,
+    title,
   } = formRenderProps;
   const classes = classNames(rootClassName || css.root, className);
+
+  const handleWhatsApp = () => {
+    const url = typeof window !== 'undefined' ? window.location.href : '';
+    const text = `Hello Agnes, I am interested in ${title}, URL: ${url}`;
+    const waUrl = `https://api.whatsapp.com/send/?phone=6591684503&text=${encodeURIComponent(
+      text
+    )}&type=phone_number&app_absent=0`;
+    window.open(waUrl, '_blank', 'noopener,noreferrer');
+  };
 
   return (
     <Form id={formId} onSubmit={handleSubmit} className={classes}>
       <div className={css.submitButton}>
-        <PrimaryButton type="submit">
+        <PrimaryButton type="button" onClick={handleWhatsApp}>
           <FormattedMessage id="InquiryWithoutPaymentForm.ctaButton" />
         </PrimaryButton>
         <FinePrint isOwnListing={isOwnListing} omitYouWontBeChargedMessage={true} />
