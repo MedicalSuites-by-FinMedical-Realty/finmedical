@@ -305,11 +305,16 @@ const OrderPanel = props => {
     fetchLineItemsError,
     payoutDetailsWarning,
     showListingImage,
+    categoryLabel,
   } = props;
 
   const publicData = listing?.attributes?.publicData || {};
   const { listingType, unitType, transactionProcessAlias = '', priceVariants, startTimeInterval } =
     publicData || {};
+
+  const categoryPill = categoryLabel ? (
+    <p className={css.categoryPill}>{categoryLabel}</p>
+  ) : null;
 
   const processName = resolveLatestProcessName(transactionProcessAlias.split('/')[0]);
   const lineItemUnitType = lineItemUnitTypeMaybe || `line-item/${unitType}`;
@@ -441,11 +446,13 @@ const OrderPanel = props => {
         usePortal
       >
         <div className={css.modalHeading}>
+          {categoryPill}
           <H1 className={css.heading}>{title}</H1>
         </div>
 
         {showListingImage && (
           <div className={css.orderHeading}>
+            {categoryPill}
             {titleDesktop ? titleDesktop : <H2 className={titleClasses}>{title}</H2>}
             {subTitleText ? <div className={css.orderHelp}>{subTitleText}</div> : null}
           </div>
