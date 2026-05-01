@@ -37,7 +37,7 @@ const getListingTypeConfig = (publicData, listingTypes) => {
 const getInitialValues = props => {
   const { listing, listingTypes } = props;
   const { publicData } = listing?.attributes || {};
-  const { unitType } = publicData || {};
+  const { unitType, listingType, price_type, psf } = publicData || {};
   const listingTypeConfig = getListingTypeConfig(publicData, listingTypes);
   // Note: publicData contains priceVariationsEnabled if listing is created with priceVariations enabled.
   const isPriceVariationsInUse = isPriceVariationsEnabled(publicData, listingTypeConfig);
@@ -47,7 +47,7 @@ const getInitialValues = props => {
         ...getInitialValuesForPriceVariants(props, isPriceVariationsInUse),
         ...getInitialValuesForStartTimeInterval(props),
       }
-    : { price: listing?.attributes?.price };
+    : { price: listing?.attributes?.price, listingType, pub_price_type: price_type, psf };
 };
 
 // This is needed to show the listing's price consistently over XHR calls.
@@ -107,6 +107,7 @@ const EditListingPricingPanel = props => {
     errors,
     updatePageTitle: UpdatePageTitle,
     intl,
+    listingFields,
   } = props;
 
   const classes = classNames(rootClassName || css.root, className);
@@ -162,7 +163,7 @@ const EditListingPricingPanel = props => {
           className={css.form}
           initialValues={initialValues}
           onSubmit={values => {
-            const { price } = values;
+            const { price, pub_price_type, psf } = values;
 
             // New values for listing attributes
             let updateValues = {};
@@ -206,6 +207,17 @@ const EditListingPricingPanel = props => {
               updateValues = { price, ...priceVariationsEnabledMaybe };
             }
 
+            if (pub_price_type) {
+              updateValues = {
+                ...updateValues,
+                publicData: {
+                  ...updateValues.publicData,
+                  price_type: pub_price_type,
+                  psf,
+                },
+              };
+            }
+
             // Save the initialValues to state
             // Otherwise, re-rendering would overwrite the values during XHR call.
             setState({
@@ -227,6 +239,7 @@ const EditListingPricingPanel = props => {
           updated={panelUpdated}
           updateInProgress={updateInProgress}
           fetchErrors={errors}
+          listingFieldsConfig={listingFields}
         />
       ) : (
         <div className={css.priceCurrencyInvalid}>

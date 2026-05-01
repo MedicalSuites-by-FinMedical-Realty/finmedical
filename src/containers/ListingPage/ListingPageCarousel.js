@@ -166,6 +166,9 @@ export const ListingPageComponent = props => {
   const categoryLabel = config.categoryConfiguration?.categories?.find(
     c => c.id === publicData.categoryLevel1
   )?.name;
+  const priceTypeLabel = listingConfig.listingFields
+    .find(f => f.key === 'price_type')
+    ?.enumOptions?.find(o => o.option === publicData.price_type)?.label;
 
   const commonParams = { params, history, routes: routeConfiguration };
   const onContactUser = handleContactUser({
@@ -341,6 +344,7 @@ export const ListingPageComponent = props => {
               marketplaceName={config.marketplaceName}
               showListingImage={showListingImage}
               categoryLabel={categoryLabel}
+              priceTypeLabel={priceTypeLabel}
             />
           </div>
         </div>

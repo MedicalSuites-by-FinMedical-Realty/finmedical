@@ -1432,5 +1432,8 @@
   "UserNav.accountSettings": "Account settings",
   "UserNav.profileSettings": "Profile settings",
   "UserNav.screenreader.userNav": "User profile navigation",
-  "UserNav.yourListings": "Your listings"
+  "UserNav.yourListings": "Your listings",
+  "EditListingPricingForm.psfLabel": "PSF ($)",
+  "EditListingPricingForm.psfPlaceholder": "Enter PSF ($)",
+  "EditListingPricingForm.psfRequired": "PSF is required"
 }

@@ -12,13 +12,14 @@ import { types as sdkTypes } from '../../../../util/sdkLoader';
 import { FIXED, isBookingProcess } from '../../../../transactions/transaction';
 
 // Import shared components
-import { Button, Form, FieldCurrencyInput } from '../../../../components';
+import { Button, Form, FieldCurrencyInput, FieldTextInput } from '../../../../components';
 
 import BookingPriceVariants from './BookingPriceVariants';
 import StartTimeInterval from './StartTimeInverval';
 
 // Import modules from this directory
 import css from './EditListingPricingForm.module.css';
+import { AddListingFields } from '../EditListingDetailsPanel/EditListingDetailsForm';
 
 const { Money } = sdkTypes;
 
@@ -116,6 +117,7 @@ export const EditListingPricingForm = props => (
         fetchErrors,
         initialValues: formInitialValues,
         values: formValues,
+        listingFieldsConfig,
       } = formRenderProps;
 
       const intl = useIntl();
@@ -179,6 +181,26 @@ export const EditListingPricingForm = props => (
               pristine={pristine}
             />
           ) : null}
+
+          <AddListingFields
+            listingType={formValues.listingType}
+            listingFieldsConfig={listingFieldsConfig.filter(elm => elm.key === 'price_type')}
+            selectedCategories={{}}
+            formId={formId}
+            intl={intl}
+          />
+
+          <FieldTextInput
+            id={`${formId}psf`}
+            name="psf"
+            className={css.input}
+            type="number"
+            label={intl.formatMessage({ id: 'EditListingPricingForm.psfLabel' })}
+            placeholder={intl.formatMessage({ id: 'EditListingPricingForm.psfPlaceholder' })}
+            validate={validators.required(
+              intl.formatMessage({ id: 'EditListingPricingForm.psfRequired' })
+            )}
+          />
 
           <Button
             className={css.submitButton}

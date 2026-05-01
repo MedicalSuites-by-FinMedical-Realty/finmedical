@@ -202,11 +202,30 @@
   }
 }
 
+.priceTypeLabel {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--colorGrey500);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-left: 6px;
+}
+
+.priceTypeLabelCTA {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--colorGrey500);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-top: 2px;
+}
+
 .priceContainerInCTA,
 .priceContainer {
   /* Layout */
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   align-items: baseline;
   gap: 4px;
   flex-shrink: 0;
@@ -228,6 +247,30 @@
   align-items: center;
   justify-content: center;
   gap: unset;
+}
+
+.psfLabel {
+  flex-basis: 100%;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--colorGrey700);
+  margin-top: 2px;
+}
+
+.psfLabelCTA {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--colorGrey700);
+  margin-top: 2px;
+}
+
+.psfText {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--colorGrey500);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-right: 2px;
 }
 
 .priceValueInCTA {
