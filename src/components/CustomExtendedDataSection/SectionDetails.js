@@ -18,7 +18,9 @@ const SectionDetails = props => {
     return null;
   }
 
-  const existingFields = fieldConfigs?.reduce(pickExtendedDataFields, []);
+  const existingFields = fieldConfigs
+    ?.reduce(pickExtendedDataFields, [])
+    .filter(elm => elm.key !== 'price_type');
 
   return existingFields?.length > 0 ? (
     <section className={classes}>

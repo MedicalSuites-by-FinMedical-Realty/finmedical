@@ -23,6 +23,7 @@ import {
   LISTING_STATE_PUBLISHED,
 } from '../../util/types';
 import { formatMoney } from '../../util/currency';
+import { types as sdkTypes } from '../../util/sdkLoader';
 import { createSlug, parse, stringify } from '../../util/urlHelpers';
 import { userDisplayNameAsString } from '../../util/data';
 import {
@@ -37,6 +38,8 @@ import {
 } from '../../transactions/transaction';
 
 import { ModalInMobile, PrimaryButton, AvatarSmall, H1, H2 } from '../../components';
+
+const { Money } = sdkTypes;
 import PriceVariantPicker from './PriceVariantPicker/PriceVariantPicker';
 import SubmitFinePrint from './SubmitFinePrint/SubmitFinePrint';
 
@@ -143,8 +146,14 @@ const PriceMaybe = props => {
     intl,
     marketplaceCurrency,
     showCurrencyMismatch = false,
+    priceTypeLabel,
   } = props;
-  const { listingType, unitType } = publicData || {};
+  const { listingType, unitType, psf } = publicData || {};
+
+  const formattedPsf =
+    psf && marketplaceCurrency
+      ? formatMoneyIfSupportedCurrency(new Money(Math.round(psf * 100), marketplaceCurrency), intl)
+      : null;
 
   const foundListingTypeConfig = validListingTypes.find(conf => conf.listingType === listingType);
   const showPrice = displayPrice(foundListingTypeConfig);
@@ -179,12 +188,24 @@ const PriceMaybe = props => {
       <div className={css.perUnitInCTA}>
         <FormattedMessage id="OrderPanel.perUnit" values={{ unitType }} />
       </div>
+      {priceTypeLabel ? <span className={css.priceTypeLabelCTA}>{priceTypeLabel}</span> : null}
+      {formattedPsf ? (
+        <span className={css.psfLabelCTA}>
+          <span className={css.psfText}>PSF </span>{formattedPsf}
+        </span>
+      ) : null}
     </div>
   ) : (
     <div className={css.priceContainer}>
       <p className={css.price}>
         <FormattedMessage id="OrderPanel.price" values={{ priceValue, pricePerUnit }} />
       </p>
+      {priceTypeLabel ? <span className={css.priceTypeLabel}>{priceTypeLabel}</span> : null}
+      {formattedPsf ? (
+        <span className={css.psfLabel}>
+          <span className={css.psfText}>PSF </span>{formattedPsf}
+        </span>
+      ) : null}
     </div>
   );
 };
@@ -306,15 +327,14 @@ const OrderPanel = props => {
     payoutDetailsWarning,
     showListingImage,
     categoryLabel,
+    priceTypeLabel,
   } = props;
 
   const publicData = listing?.attributes?.publicData || {};
   const { listingType, unitType, transactionProcessAlias = '', priceVariants, startTimeInterval } =
     publicData || {};
 
-  const categoryPill = categoryLabel ? (
-    <p className={css.categoryPill}>{categoryLabel}</p>
-  ) : null;
+  const categoryPill = categoryLabel ? <p className={css.categoryPill}>{categoryLabel}</p> : null;
 
   const processName = resolveLatestProcessName(transactionProcessAlias.split('/')[0]);
   const lineItemUnitType = lineItemUnitTypeMaybe || `line-item/${unitType}`;
@@ -464,6 +484,7 @@ const OrderPanel = props => {
           validListingTypes={validListingTypes}
           intl={intl}
           marketplaceCurrency={marketplaceCurrency}
+          priceTypeLabel={priceTypeLabel}
         />
 
         <div className={css.author}>
@@ -576,6 +597,7 @@ const OrderPanel = props => {
           intl={intl}
           marketplaceCurrency={marketplaceCurrency}
           showCurrencyMismatch
+          priceTypeLabel={priceTypeLabel}
         />
 
         {isClosed ? (

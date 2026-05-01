@@ -244,7 +244,7 @@ const FieldSelectCategory = props => {
 };
 
 // Add collect data for listing fields (both publicData and privateData) based on configuration
-const AddListingFields = props => {
+export const AddListingFields = props => {
   const { listingType, listingFieldsConfig, selectedCategories, formId, intl } = props;
   const targetCategoryIds = Object.values(selectedCategories);
 
@@ -457,7 +457,7 @@ const EditListingDetailsForm = props => (
           {showListingFields && isCompatibleCurrency && (
             <AddListingFields
               listingType={listingType}
-              listingFieldsConfig={listingFieldsConfig}
+              listingFieldsConfig={listingFieldsConfig.filter(elm => elm.key !== 'price_type')}
               selectedCategories={pickSelectedCategories(values)}
               formId={formId}
               intl={intl}
