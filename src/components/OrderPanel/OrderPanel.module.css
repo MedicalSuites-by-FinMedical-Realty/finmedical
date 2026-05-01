@@ -124,6 +124,19 @@
   }
 }
 
+.categoryPill {
+  display: inline-block;
+  margin: 0 0 8px;
+  padding: 2px 12px;
+  border-radius: 12px;
+  background-color: var(--colorGrey100);
+  color: var(--colorGrey700);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
 .orderTitle {
   /* Font */
   color: var(--colorGrey700);

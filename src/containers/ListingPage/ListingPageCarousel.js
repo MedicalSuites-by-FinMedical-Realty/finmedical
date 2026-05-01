@@ -163,6 +163,9 @@ export const ListingPageComponent = props => {
   }
   const unitType = publicData.unitType;
   const isNegotiation = processType === 'negotiation';
+  const categoryLabel = config.categoryConfiguration?.categories?.find(
+    c => c.id === publicData.categoryLevel1
+  )?.name;
 
   const commonParams = { params, history, routes: routeConfiguration };
   const onContactUser = handleContactUser({
@@ -261,6 +264,7 @@ export const ListingPageComponent = props => {
             <div
               className={showListingImage ? css.mobileHeading : css.noListingImageHeadingProduct}
             >
+              {categoryLabel ? <p className={css.categoryPill}>{categoryLabel}</p> : null}
               {showListingImage ? (
                 <H2 as="h1" className={css.orderPanelTitle}>
                   <FormattedMessage id="ListingPage.orderTitle" values={{ title: richTitle }} />
@@ -336,6 +340,7 @@ export const ListingPageComponent = props => {
               dayCountAvailableForBooking={config.stripe.dayCountAvailableForBooking}
               marketplaceName={config.marketplaceName}
               showListingImage={showListingImage}
+              categoryLabel={categoryLabel}
             />
           </div>
         </div>
