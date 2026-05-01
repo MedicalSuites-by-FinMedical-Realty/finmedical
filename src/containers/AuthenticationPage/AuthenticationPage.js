@@ -250,8 +250,8 @@ export const AuthenticationPageComponent = props => {
 
   const isConfirm = tab === 'confirm';
   const isLogin = tab === 'login';
-  const userTypeInPushState = location.state?.userType || null;
-  const userTypeInAuthInfo = isConfirm && authInfo?.userType ? authInfo?.userType : null;
+  const userTypeInPushState = location.state?.userType || 'customer';
+  const userTypeInAuthInfo = isConfirm && authInfo?.userType ? authInfo?.userType : 'customer';
   const userType = pathParams?.userType || userTypeInPushState || userTypeInAuthInfo || null;
 
   const { userTypes = [], userFields = [] } = config.user;

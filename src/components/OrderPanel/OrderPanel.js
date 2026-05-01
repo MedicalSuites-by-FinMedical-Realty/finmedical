@@ -537,6 +537,7 @@ const OrderPanel = props => {
             onSubmit={onSubmit}
             finePrintComponent={SubmitFinePrint}
             isOwnListing={isOwnListing}
+            title={listing?.attributes?.title}
           />
         ) : showNegotiationForm ? (
           <NegotiationForm

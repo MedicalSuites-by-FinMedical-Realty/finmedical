@@ -223,8 +223,8 @@ const TopbarDesktop = props => {
 
       {inboxLinkMaybe}
       {profileMenuMaybe}
-      {signupLinkMaybe}
-      {loginLinkMaybe}
+      {/* {signupLinkMaybe}
+      {loginLinkMaybe} */}
     </nav>
   );
 };
